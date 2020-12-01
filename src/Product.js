@@ -1,24 +1,25 @@
 import React from "react";
 import "./Product.css";
 
-function Product() {
+function Product({ id, title, image, rating, price }) {
   return (
     <div className="product">
       <div className="product__info">
-        <p>The lean startup</p>
+        <p>{title}</p>
         <p className="product__price">
           <small>$</small>
-          <strong>400</strong>
+          <strong>{price}</strong>
         </p>
         <div className="product__rating">
-          <p>🌟</p>
+          {Array(rating)
+            .fill()
+            .map((_, i) => {
+              return <p>🌟</p>;
+            })}
         </div>
       </div>
 
-      <img
-        src="https://m.media-amazon.com/images/I/71N-xsXm2mL._AC_UY218_.jpg"
-        alt=""
-      />
+      <img src={image} alt="" />
 
       <button>Add to Basket</button>
     </div>
