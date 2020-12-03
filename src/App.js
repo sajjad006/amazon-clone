@@ -3,15 +3,16 @@ import Header from "./Header";
 import Home from "./Home";
 import Checkout from "./Checkout";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Login from "./Login";
 
 function App() {
   return (
     <Router>
       <div className="app">
         <Switch>
-          <Route path="/checkout">
+          <Route path="/login">
             <Header />
-            <Checkout />
+            <Login />
           </Route>
 
           <Route path="/checkout">
