@@ -14,6 +14,11 @@ function App() {
             <Checkout />
           </Route>
 
+          <Route path="/checkout">
+            <Header />
+            <Checkout />
+          </Route>
+
           <Route path="/">
             <Header />
             <Home />
