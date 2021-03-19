@@ -2,45 +2,43 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { auth } from "./firebase";
 import "./Login.css";
-import axios from './axios';
+import axios from "./axios";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
 
-  const signIn = (e) => {
+  const signIn = async (e) => {
     e.preventDefault();
 
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((auth) => {
-        history.push("/");
-      })
-      .catch(error => alert(error.message));
+    const res = await axios.post("/api/users/signin", {
+      email: email,
+      password: password,
+    });
+
+    console.log(res);
+
+    if (res["data"]["success"] === true) {
+      window.location.href = "/";
+    } else {
+      document.querySelector(".flash-incorrect-login").style.display = "block";
+      document.querySelector(".flash-incorrect-login").text = `${res["error"]}`;
+    }
   };
 
   const register = async (e) => {
     e.preventDefault();
 
-    /*  auth
-        .createUserWithEmailAndPassword(email, password)
-        .then((auth) => {
-          // console.log(auth);
-          if (auth) {
-            history.push("/");
-          }
-        })
-        .catch((error) => alert(error.message));
-    */
+    const res = await axios.post("/api/users", {
+      email: email,
+      password: password,
+    });
 
-    const res = await axios.post('/api/users', {'email': email, 'password': password});
-
-    if (res['data']['success']===true) {
-      window.location.href='/';
-    }
-    else{
-      document.querySelector('.flash-incorrect-login').style.display='block';
+    if (res["data"]["success"] === true) {
+      window.location.href = "/";
+    } else {
+      document.querySelector(".flash-incorrect-login").style.display = "block";
     }
   };
 
