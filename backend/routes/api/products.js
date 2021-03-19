@@ -39,8 +39,7 @@ router.post("/", (req, res) => {
 
   newProduct
     .save()
-    .then((item) => res.json(item))
-    .catch(res.status(400).json({ error: "something went wrong" }));
+    .then((item) => res.json(item));
 });
 
 // update product with specific id
@@ -59,7 +58,7 @@ router.put("/:id", (req, res) => {
 });
 
 // delete products with specific id
-router.get("/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
   Product.findById(req.params.id)
     .then((item) => item.remove().then(() => res.json({ success: true })))
     .catch((err) => res.status(400).json({ error: "Member not found." }));

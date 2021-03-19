@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { auth } from "./firebase";
 import "./Login.css";
+import axios from './axios';
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -19,18 +20,28 @@ function Login() {
       .catch(error => alert(error.message));
   };
 
-  const register = (e) => {
+  const register = async (e) => {
     e.preventDefault();
 
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((auth) => {
-        // console.log(auth);
-        if (auth) {
-          history.push("/");
-        }
-      })
-      .catch((error) => alert(error.message));
+    /*  auth
+        .createUserWithEmailAndPassword(email, password)
+        .then((auth) => {
+          // console.log(auth);
+          if (auth) {
+            history.push("/");
+          }
+        })
+        .catch((error) => alert(error.message));
+    */
+
+    const res = await axios.post('/api/users', {'email': email, 'password': password});
+
+    if (res['data']['success']===true) {
+      window.location.href='/';
+    }
+    else{
+      document.querySelector('.flash-incorrect-login').style.display='block';
+    }
   };
 
   return (
@@ -45,6 +56,10 @@ function Login() {
 
       <div className="login__container">
         <h1>Sign In</h1>
+
+        <div className="flash-incorrect-login">
+          <p>Sorry! Try again later!</p>
+        </div>
 
         <form>
           <h5>E-mail</h5>

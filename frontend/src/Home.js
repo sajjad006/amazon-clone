@@ -1,8 +1,21 @@
-import React from "react";
+import React, {useState, useEffect} from 'react';
 import "./Home.css";
 import Product from "./Product";
+import axios from './axios';
 
 function Home() {
+  const [products, setProducts]=useState([]);
+
+  useEffect(() => {
+      async function fetchData() {
+          const request=await axios.get('/api/products');
+          setProducts(request.data);
+          return request;
+          console.log(request.data);
+      }
+      fetchData();
+  }, []);
+  
   return (
     <div className="home">
       <div className="home__container">
@@ -13,6 +26,21 @@ function Home() {
         />
 
         <div className="home__row">
+          {
+            products.map(product => (
+              <Product
+                id={products._id}
+                title={product.name}
+                image={product.image}
+                price={parseInt(product.price)}
+                rating={parseInt(product.rating)}
+              />
+            ))
+          }
+        </div>
+
+
+      <div className="home__row">
           <Product
             id="121221"
             title="New Apple iPad Pro (11-inch, Wi-Fi, 1TB) - Space Grey (2nd Generation)"

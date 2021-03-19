@@ -64,3 +64,13 @@
   margin-top: 10px;
   border-color: darkgray;
 }
+
+.flash-incorrect-login{
+  color: red;
+  border: 1px solid red;
+  opacity: 0.5;
+  font-weight: 800;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: none;
+}
